@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: font1;
+    src: url("/fonts/6804c760eed6c111d8b88416_Apparel-RegularIt.woff2");
+}
+@font-face {
+    font-family: font2;
+    src: url("/fonts/6804c70ca4cba424283a3d78_SuisseIntl-Book.otf");
+}
+@font-face {
+    font-family: font3;
+    src: url("/fonts/KHTekaMono-Regular.woff");
+}
+@font-face {
+    font-family: font4;
+    src: url("/fonts/6804c6e6e59f54740751a4b4_SuisseIntl-Regular.otf");
+}

@@ -18,9 +18,12 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.11.0",
     "react-simple": "^1.2.3",
     "react-simple-code-editor": "^0.14.1",
+    "react-toastify": "^11.0.5",
     "rehype-highlight": "^7.0.2",
+    "remixicon": "^4.7.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
