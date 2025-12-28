@@ -16,11 +16,10 @@ const CodeReviewerPage = () => {
   }, []);
 
   async function reviewCode() {
-    const response = await axios.post("http://localhost:3000/ai/get-review", {
-      code,
-    });
+    const response = await axios.post("http://localhost:8080/ai/get-review", { code });
     setReview(response.data);
   }
+
   return (
     <>
       <main className='relative h-screen w-screen flex p-6 gap-6'>
