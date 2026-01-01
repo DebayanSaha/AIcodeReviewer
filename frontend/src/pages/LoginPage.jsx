@@ -25,6 +25,11 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if(formData.username.length<3){
+      setError(" Username must be at least 3 letters");
+      return;
+    }
+
     if (formData.password.length < 8) {
       setError("Password should be min 8 char");
       return;

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Email Verification</title>
+
+    <style>
+      /* Base */
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f4f6f8;
+        padding: 20px;
+        margin: 0;
+      }
+
+      /* Layout */
+      .container {
+        max-width: 500px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Header */
+      .header h2 {
+        margin-top: 0;
+        text-align: center;
+        color: #111827;
+      }
+
+      /* Body */
+      .body h2 {
+        color: #111827;
+        margin-bottom: 12px;
+      }
+
+      .body p {
+        color: #374151;
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+
+      /* Button */
+      .btn-wrapper {
+        text-align: center;
+        margin: 24px 0;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #00a63d;
+        color: #ffffff !important;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+
+      /* Footer */
+      .footer {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 24px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>Verify Your Email Address</h2>
+      </div>
+
+      <div class="body">
+        <h2>Hello {{name}},</h2>
+
+        <p>
+          Thank you for registering on our website. To complete your signup
+          process and activate your account, please verify your email address by
+          clicking the button below.
+        </p>
+
+        <div class="btn-wrapper">
+          <a
+            href="http://localhost:8080/verify/{{token}}"
+            target="_blank"
+            class="btn"
+          >
+            Verify your email
+          </a>
+        </div>
+
+        <p>
+          If you didn’t request this verification, you can safely ignore this
+          email.
+        </p>
+      </div>
+
+      <div class="footer">
+        © 2025 REVI · All rights reserved
+      </div>
+    </div>
+  </body>
+</html>

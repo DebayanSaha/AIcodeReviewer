@@ -19,8 +19,8 @@ const HomePage = () => {
                         </p>
                     </div>
                     <div className='absolute h-20 w-75 flex items-center justify-center gap-4 p-2 font-[font3] bottom-40'>
-                        <button onClick={()=>{navigate('/signup')}} className='cursor-pointer px-8 py-3 rounded-full bg-emerald-500 text-black font-semibold'>Log In</button>
-                        <button onClick={()=>{navigate('/login')}} className='cursor-pointer px-8 py-3 rounded-full bg-emerald-100 text-black font-semibold'>Continue</button>
+                        <button onClick={()=>{navigate('/login')}} className='cursor-pointer px-8 py-3 rounded-full bg-emerald-500 text-black font-semibold'>Log In</button>
+                        <button onClick={()=>{navigate('/code-review')}} className='cursor-pointer px-8 py-3 rounded-full bg-emerald-100 text-black font-semibold'>Continue</button>
                     </div>
                     <h2 className='absolute bottom-25 font-[font3] text-white text-[15px] text-center'>Please Log in to continue to the page..</h2>
                     
