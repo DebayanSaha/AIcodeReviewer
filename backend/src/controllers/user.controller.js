@@ -247,7 +247,7 @@ module.exports.verifyOtp = async (req,res)=>{
     const email = req.params.email;
 
     if(!otp){
-        return res.status(401).json({
+        return res.status(400).json({
             success:false,
             message:"Otp is required"
         }) 

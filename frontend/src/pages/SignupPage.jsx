@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from "react-toastify";
-import 'remixicon/fonts/remixicon.css'
+import 'remixicon/fonts/remixicon.css';
+import axios from 'axios';
 
 const SignupPage = () => {
   const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name:'',
         email:'',
@@ -24,51 +25,39 @@ const SignupPage = () => {
     
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        if(formData.username.length < 3){
-          setError(" Username must be at least 3 letters");
-          return;
-        }
-        if (formData.password.length < 8) {
-          setError("Password should be min 8 char");
-          return;
-        }
-        if (formData.password !== formData.confirmPassword) {
-          setError("Password and confirm password must be same");
-          return;
-        }
-        if (!/[!@#$%^&*()<>,."]/.test(formData.password)) {
-          setError("Password should contain special char");
-          return;
-        }
-        if (!/[A-Z]/.test(formData.password)) {
-          setError("Password should contain atleast one uppercase");
-          return;
-        }
-    
-        console.log(formData.name,formData.username, formData.email, formData.password, formData.confirmPassword);
-        setError("");
+        console.log(formData);
+        if(formData.username.length < 3) return setError(" Username must be at least 3 letters");
+      
+        if (formData.password.length < 8) return setError("Password should be min 8 char");
+
+        if (formData.password !== formData.confirmPassword) return setError("Password and confirm password must be same");
+
+        if (!/[!@#$%^&*()<>,."]/.test(formData.password)) return setError("Password should contain special char")
         
-        setFormData({
-          name:'',
-          email:'',
-          username:'',
-          password:'',
-          confirmPassword:'',
-        });
-    
-        toast.success("Account succesfully created!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+        if (!/[A-Z]/.test(formData.password)) return setError("Password should contain atleast one uppercase");
+
+        try {
+          const res = await axios.post(`http://localhost:8080/user/register`,formData,{
+            headers:{
+              "Content-Type": "application/json"
+            }
+          })
+          if(res.data.success){
+            navigate('/verify');
+            setError("");
+            setFormData({
+              name:'',
+              email:'',
+              username:'',
+              password:'',
+              confirmPassword:'',
+            });
+          }      
+        } catch (error) {
+          console.log(error.message)
+        }
       };
 
   return (
@@ -102,7 +91,7 @@ const SignupPage = () => {
               Username
             </label>
             <input
-              type="string"
+              type="text"
               name="username"
               placeholder="Enter your username"
               value={formData.username}
@@ -159,11 +148,10 @@ const SignupPage = () => {
           {error && <p className="text-sm text-red-500 text-center">{error}</p>}
 
           <button
-            onClick={()=>{navigate('/login')}}
             type="submit"
             className="cursor-pointer font-[font3] w-full bg-blue-600 text-white rounded-full py-2 text-[16px] font-bold"
           >
-            Sign in
+            Sign up
           </button>
 
           <p className="font-[font3] text-sm text-center text-gray-500 mt-4">
@@ -172,8 +160,6 @@ const SignupPage = () => {
               Log In
             </span>
           </p>
-
-          <ToastContainer />
         </form>
       </div>
     </div>

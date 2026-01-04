@@ -1,16 +1,17 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import 'remixicon/fonts/remixicon.css'
+import { toast } from "react-toastify";
+import "remixicon/fonts/remixicon.css";
+import { getData } from "../context/UserContext";
 
 const LoginPage = () => {
+  const {setUser} = getData()
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-
   const [error, setError] = useState("");
 
   const handleChanges = (e) => {
@@ -22,66 +23,70 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
-    if(formData.username.length<3){
-      setError(" Username must be at least 3 letters");
-      return;
-    }
+    if (formData.username.length < 3) return setError(" Username must be at least 3 letters")
+    if (formData.password.length < 8) return setError("Password should be min 8 char")
+    if (!/[!@#$%^&*()<>,."]/.test(formData.password)) return setError("Password should contain special char")
+    if (!/[A-Z]/.test(formData.password)) return setError("Password should contain atleast one uppercase")
 
-    if (formData.password.length < 8) {
-      setError("Password should be min 8 char");
-      return;
-    }
-    if (!/[!@#$%^&*()<>,."]/.test(formData.password)) {
-      setError("Password should contain special char");
-      return;
-    }
-    if (!/[A-Z]/.test(formData.password)) {
-      setError("Password should contain atleast one uppercase");
-      return;
-    }
+    try {
+      const res = await axios.post(`http://localhost:8080/user/login`,formData);
 
-    console.log(
-      formData.username,
-      formData.password,
-    );
-    setError("");
+      if(res.data.success){
 
-    setFormData({
-      username: "",
-      password: "",
-    });
+        localStorage.setItem('accessToken' , res.data.accessToken)
+        toast.success(`Welcome back ${formData.username}`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
 
-    toast.success("Login Succesfull!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+        setUser(res.data.userCheck)
+
+        setTimeout(()=>{
+          navigate('/code-review');
+        },2000)
+
+        setError("");
+
+        setFormData({
+          username: "",
+          password: "",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }    
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-tl from-stone-900 to-green-950">
       <div className="w-95 bg-white p-6 rounded-2xl">
-        <div className='flex '>
-            <h2 className="text-xl font-[font2] font-semibold text-gray-800 mb-6">
-                 Login to your account 
-            </h2>
-            <i onClick={()=>{navigate('/')}} className="cursor-pointer ml-25 text-2xl font-bold ri-arrow-left-line"></i>
+        <div className="flex ">
+          <h2 className="text-xl font-[font2] font-semibold text-gray-800 mb-6">
+            Login to your account
+          </h2>
+          <i
+            onClick={() => {
+              navigate("/");
+            }}
+            className="cursor-pointer ml-25 text-2xl font-bold ri-arrow-left-line"
+          ></i>
         </div>
 
-        <form  onSubmit={handleSubmit} className="font-[font2] space-y-4">
+        <form onSubmit={handleSubmit} className="font-[font2] space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Username
             </label>
             <input
-              type="string"
+              type="text"
               name="username"
               placeholder="Enter your username"
               value={formData.username}
@@ -95,6 +100,12 @@ const LoginPage = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
+            <span
+              onClick={() => navigate("/forgot-password")}
+              className="text-xs text-blue-600 cursor-pointer hover:underline"
+            >
+              Forgot password?
+            </span>
             <input
               type="password"
               name="password"
@@ -109,7 +120,6 @@ const LoginPage = () => {
           {error && <p className="text-sm text-red-500">{error}</p>}
 
           <button
-            onClick={()=>{navigate('/code-review')}}
             type="submit"
             className="cursor-pointer font-[font3] w-full bg-blue-600 text-white rounded-full py-2 text-[16px] font-bold"
           >
@@ -118,12 +128,13 @@ const LoginPage = () => {
 
           <p className="font-[font3] text-sm text-center text-gray-500 mt-4">
             Don’t have an account?
-            <span onClick={()=>navigate('/signup')} className="text-green-600 cursor-pointer ml-1 hover:underline font-bold">
+            <span
+              onClick={() => navigate("/signup")}
+              className="text-green-600 cursor-pointer ml-1 hover:underline font-bold"
+            >
               Sign up
             </span>
           </p>
-
-          <ToastContainer />
         </form>
       </div>
     </div>
