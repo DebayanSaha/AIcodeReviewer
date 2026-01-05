@@ -28,7 +28,7 @@ const ChangePassPage = () => {
     if (!/[A-Z]/.test(formData.password)) return setError("Password should contain atleast one uppercase");
 
     try {
-      const res = await axios.post(`http://localhost:8080/user/new-password/${email}`,{
+      const res = await axios.post(`https://aicodereviewer-liq8.onrender.com/user/new-password/${email}`,{
         newPassword:formData.password,
         confirmPassword:formData.confirmPassword,
       });

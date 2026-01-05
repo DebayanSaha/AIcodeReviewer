@@ -9,7 +9,7 @@ const ForgotPassPage = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:8080/user/forget-password`,{email});
+      const res = await axios.post(`https://aicodereviewer-liq8.onrender.com/user/forget-password`,{email});
 
       if(res.data.success){
         toast.success("OTP has been sent!", {

@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const handleLogout = async() => {
     try {
-      const res = await axios.post(`http://localhost:8080/user/logout`,{},{
+      const res = await axios.post(`https://aicodereviewer-liq8.onrender.com/user/logout`,{},{
         headers:{
           Authorization : `Bearer ${accessToken}`
         }

@@ -20,7 +20,7 @@ const CodeReviewerPage = () => {
   }, []);
 
   async function reviewCode() {
-    const response = await axios.post("http://localhost:8080/ai/get-review", { code });
+    const response = await axios.post("https://aicodereviewer-liq8.onrender.com/ai/get-review", { code });
     setReview(response.data);
   }
   console.log(user);

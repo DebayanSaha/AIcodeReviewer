@@ -33,7 +33,7 @@ const VerifyOTPPage = () => {
     const enteredOtp = otp.join("");
 
     try {
-        const res = await axios.post(`http://localhost:8080/user/verify-otp/${email}` , {otp:enteredOtp});
+        const res = await axios.post(`https://aicodereviewer-liq8.onrender.com/user/verify-otp/${email}` , {otp:enteredOtp});
         if(res.data.success){
             toast.success("OTP verified✅!", {
                 position: "top-right",

@@ -12,7 +12,7 @@ const Verify = () => {
     const verifyEmail =async()=>{
       try {
         //That {} is the request body, keeping it blank means this is a POST request, but I’m not sending any body data.
-        const res = await axios.post(`http://localhost:8080/user/verify`,{},{
+        const res = await axios.post(`https://aicodereviewer-liq8.onrender.com/user/verify`,{},{
           headers:{
             Authorization: `Bearer ${token}`
           }

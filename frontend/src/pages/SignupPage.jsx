@@ -39,7 +39,7 @@ const SignupPage = () => {
         if (!/[A-Z]/.test(formData.password)) return setError("Password should contain atleast one uppercase");
 
         try {
-          const res = await axios.post(`http://localhost:8080/user/register`,formData,{
+          const res = await axios.post(`https://aicodereviewer-liq8.onrender.com/user/register`,formData,{
             headers:{
               "Content-Type": "application/json"
             }
