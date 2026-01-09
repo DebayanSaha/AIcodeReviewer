@@ -1,8 +1,17 @@
 import React from 'react'
+import { motion } from 'framer-motion'
+import { pageVariants } from '../../animations/pageVariants'
 
 const VerifyEmailPage = () => {
 
   return (
+    <motion.main 
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="min-h-screen bg-neutral-950"
+    >
     <div className="min-h-screen flex items-center justify-center bg-linear-to-tl from-stone-900 to-green-950">
       <div className="w-105 bg-white p-6 rounded-2xl">
 
@@ -24,6 +33,7 @@ const VerifyEmailPage = () => {
         </p>
       </div>
     </div>
+    </motion.main>
   );
 }
 

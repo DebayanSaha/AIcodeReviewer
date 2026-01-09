@@ -9,6 +9,8 @@ import "highlight.js/styles/github-dark.css"
 import 'remixicon/fonts/remixicon.css'
 import { getData } from "../context/UserContext";
 import { Navigate } from "react-router-dom";
+import { motion } from 'framer-motion'
+import { pageVariants } from '../animations/pageVariants'
 
 const CodeReviewerPage = () => {
   const {user} = getData()
@@ -23,13 +25,19 @@ const CodeReviewerPage = () => {
     const response = await axios.post("https://aicodereviewer-liq8.onrender.com/ai/get-review", { code });
     setReview(response.data);
   }
-  console.log(user);
   
   return (
     <>
     {
       user ? 
-      <>
+      <motion.main 
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
+        <>
+      
         <main className='relative  flex p-4 gap-6 '>
           {/* left */}
           <section className='relative w-1/2 h-[85vh] bg-black rounded-2xl overflow-hidden flex flex-col'>
@@ -71,7 +79,7 @@ const CodeReviewerPage = () => {
             </div>
           </section>       
         </main>
-      </> 
+      </> </motion.main>
       : <Navigate to={'/login'}/>
       
     }

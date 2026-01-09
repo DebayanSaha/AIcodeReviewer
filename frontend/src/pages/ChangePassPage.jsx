@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { motion } from 'framer-motion'
+import { pageVariants } from '../animations/pageVariants'
 
 const ChangePassPage = () => {
   const { email } = useParams();
@@ -55,6 +57,13 @@ const ChangePassPage = () => {
     }   
 
   return (
+    <motion.main 
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="min-h-screen bg-neutral-950"
+    >
     <div className="min-h-screen flex items-center justify-center bg-linear-to-tr from-stone-900 to-green-950">
       <div className="w-105 bg-white p-6 rounded-2xl text-center">
         <h2 className="text-xl font-semibold text-gray-800 mb-2">
@@ -99,6 +108,7 @@ const ChangePassPage = () => {
         </p>
       </div>
     </div>
+    </motion.main>
   );
 };
 

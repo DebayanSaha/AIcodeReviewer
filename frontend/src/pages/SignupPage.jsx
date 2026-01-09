@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import 'remixicon/fonts/remixicon.css';
 import axios from 'axios';
+import { motion } from 'framer-motion'
+import { pageVariants } from '../animations/pageVariants';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -61,6 +63,13 @@ const SignupPage = () => {
       };
 
   return (
+    <motion.main 
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="min-h-screen bg-neutral-950"
+    >
     <div className="min-h-screen flex items-center justify-center bg-linear-to-tl from-stone-900 to-green-950">
       <div className="w-95 bg-white p-6 rounded-2xl">
         <div className='flex '>
@@ -163,6 +172,7 @@ const SignupPage = () => {
         </form>
       </div>
     </div>
+    </motion.main>
   );
 }
 
