@@ -1,46 +1,45 @@
 const nodemailer = require("nodemailer");
-require('dotenv').config();
-const fs = require('fs')
-const path = require('path');
-const handlebars = require('handlebars');
+const fs = require("fs");
+const path = require("path");
+const handlebars = require("handlebars");
+require("dotenv").config();
 
 module.exports.emailVerify = async (token, email, name) => {
-  
-  const emailTemplateSource = fs.readFileSync(
-    path.join(__dirname,"template.hbs"),"utf-8"
-  )
+  try {
+    // 1️⃣ Load and compile template
+    const emailTemplateSource = fs.readFileSync(
+      path.join(__dirname, "template.hbs"),
+      "utf-8"
+    );
+    const template = handlebars.compile(emailTemplateSource);
+    const htmlToSend = template({
+      token: encodeURIComponent(token),
+      name: name,
+    });
 
-  const template = handlebars.compile(emailTemplateSource);
-  const htmlToSend = template(
-    {
-      token:encodeURIComponent(token),
-      name: name
-    }
-  );
+    // 2️⃣ Create Brevo transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.BREVO_SMTP_HOST,
+      port: process.env.BREVO_SMTP_PORT,
+      secure: false, // STARTTLS on 587
+      auth: {
+        user: process.env.BREVO_USER,
+        pass: process.env.BREVO_PASS,
+      },
+    });
 
-  //delivery engine- tells nodemailer how to connect to (here gmail)server
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    //identity + permission (acts as a ID card )
-    auth: {
-      user: process.env.MAIL_USER, //tells gmail who is sending mail
-      pass: process.env.MAIL_PASSWORD, //proves that this server is allowed to send gmail through for the above accnt, without this mail refuses to connect
-    },
-  });
+    // 3️⃣ Prepare email
+    const mailOptions = {
+      from: process.env.MAIL_FROM,
+      to: email,
+      subject: "Email Verification",
+      html: htmlToSend,
+    };
 
-  //This is the actual message, tells from where mail is been send, who to send to , subject and content
-  const emailConfiguration ={
-    from: process.env.MAIL_USER,
-    to:email,
-    subject: "Email Verification",
-    html: htmlToSend
+    // 4️⃣ Send email
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully ->", info.messageId);
+  } catch (error) {
+    console.error("Email sending failed ->", error);
   }
-
-  //delivers the email
-  transporter.sendMail(emailConfiguration, function(error,info){
-    if(error) throw new Error(error);
-    console.log('Email sent succesully !');
-    console.log(info);
-  })
 };
-
