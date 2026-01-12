@@ -39,11 +39,12 @@ module.exports.emailVerify = async (token, email, name) => {
     // 4️⃣ Send email
     const info = await transporter.sendMail(mailOptions);
     console.log("Email sent successfully ->", info.messageId);
+   
+
+  } catch (error) {
+    console.error("Email sending failed ->", error); 
     console.log(process.env.BREVO_SMTP_HOST,
             process.env.BREVO_SMTP_PORT,
             process.env.BREVO_USER)
-
-  } catch (error) {
-    console.error("Email sending failed ->", error);
   }
 };
