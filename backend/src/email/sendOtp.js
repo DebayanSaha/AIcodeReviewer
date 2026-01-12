@@ -1,29 +1,27 @@
-const axios = require("axios");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 require("dotenv").config();
 
 module.exports.sendOtp = async (email, otp) => {
   try {
-    const response = await axios.post(
-      "https://api.brevo.com/v3/smtp/email",
-      {
-        sender: { email: process.env.MAIL_FROM },
-        to: [{ email }],
-        subject: "Reset Password",
-        htmlContent: `<p>Your OTP for password reset is:<br/><b>${otp}</b><br/>It is valid for 5 minutes.</p>`,
-      },
-      {
-        headers: {
-          "api-key": process.env.BREVO_API_KEY,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const defaultClient = SibApiV3Sdk.ApiClient.instance;
+    const apiKey = defaultClient.authentications["api-key"];
+    apiKey.apiKey = process.env.BREVO_API_KEY;
 
-    console.log("OTP email sent ->", response.data);
-  } catch (error) {
-    console.error(
-      "OTP email failed ->",
-      error.response?.data || error.message
-    );
+    const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+    await apiInstance.sendTransacEmail({
+      sender: {
+        name: process.env.MAIL_FROM_NAME,
+        email: process.env.MAIL_FROM,
+      },
+      to: [{ email }],
+      subject: "Reset Password OTP",
+      htmlContent: `<p>Your OTP is <b>${otp}</b>. It is valid for 5 minutes.</p>`,
+    });
+
+    console.log("OTP email sent");
+
+  } catch (err) {
+    console.error("OTP email failed ->", err);
   }
 };

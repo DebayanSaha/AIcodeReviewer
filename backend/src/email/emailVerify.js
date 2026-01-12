@@ -1,46 +1,41 @@
-const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 require("dotenv").config();
 
 module.exports.emailVerify = async (token, email, name) => {
   try {
-    // Load and compile Handlebars template
     const emailTemplateSource = fs.readFileSync(
       path.join(__dirname, "template.hbs"),
       "utf-8"
     );
 
     const template = handlebars.compile(emailTemplateSource);
-
     const htmlToSend = template({
       token: encodeURIComponent(token),
       name: name,
     });
 
-    // Send email via Brevo HTTP API
-    const response = await axios.post(
-      "https://api.brevo.com/v3/smtp/email",
-      {
-        sender: { email: process.env.MAIL_FROM },
-        to: [{ email }],
-        subject: "Email Verification",
-        htmlContent: htmlToSend,
-      },
-      {
-        headers: {
-          "api-key": process.env.BREVO_API_KEY,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const defaultClient = SibApiV3Sdk.ApiClient.instance;
+    const apiKey = defaultClient.authentications["api-key"];
+    apiKey.apiKey = process.env.BREVO_API_KEY;
 
-    console.log("Email sent successfully ->", response.data);
-  } catch (error) {
-    console.error(
-      "Email sending failed ->",
-      error.response?.data || error.message
-    );
+    const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+    await apiInstance.sendTransacEmail({
+      sender: {
+        name: process.env.MAIL_FROM_NAME,
+        email: process.env.MAIL_FROM,
+      },
+      to: [{ email }],
+      subject: "Email Verification",
+      htmlContent: htmlToSend,
+    });
+
+    console.log("Verification email sent");
+
+  } catch (err) {
+    console.error("Email sending failed ->", err);
   }
 };
