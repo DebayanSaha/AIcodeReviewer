@@ -12,7 +12,7 @@ module.exports.sendOtp = async (email, otp) => {
     await apiInstance.sendTransacEmail({
       sender: {
         name: process.env.MAIL_FROM_NAME,
-        email: process.env.MAIL_FROM,
+        email: process.env.MAIL_FROM_EMAIL,
       },
       to: [{ email }],
       subject: "Reset Password OTP",
