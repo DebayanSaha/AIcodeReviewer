@@ -58,7 +58,7 @@ const HomePage = () => {
           {/* ambient glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-emerald-500/5" />
 
-          {/* floating particles stay untouched */}
+          {/* floating particles */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(15)].map((_, i) => (
               <div
@@ -76,20 +76,22 @@ const HomePage = () => {
           {/* Title */}
           <motion.div
             variants={itemVariants}
-            className="absolute top-15 flex flex-col items-center"
+            className="absolute top-8 md:top-15 flex flex-col items-center"
           >
-            <h1 className="font-[font2] text-white text-8xl">REVI.</h1>
-            <h3 className="font-[font3] text-white text-xl mt-4">
+            <h1 className="font-[font2] text-white mt-7 md:mt-0 text-7xl md:text-8xl">
+              REVI.
+            </h1>
+            <h3 className="font-[font3] text-zinc-300 text-sm md:text-xl mt-4 text-center md:mt-3">
               Review code instantly with AI precision
             </h3>
           </motion.div>
 
-          {/* Bot image with subtle parallax */}
+          {/* Bot image */}
           <motion.img
             variants={itemVariants}
             src="imgs/bot.png"
             alt=""
-            className="h-60 w-50"
+            className="h-44 w-auto md:h-60 md:w-50"
             style={{
               transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
             }}
@@ -98,9 +100,9 @@ const HomePage = () => {
           {/* Description */}
           <motion.div
             variants={itemVariants}
-            className="absolute right-30 bottom-40 h-60 w-90"
+            className="absolute right-4 bottom-36 text-start md:right-30 md:bottom-40 h-auto md:h-60 w-72 md:w-90"
           >
-            <p className="font-[font3] text-white text-[15px]">
+            <p className="font-[font3] text-white text-[13px] md:text-[15px]">
               "Detect bugs, optimize performance, and uncover security vulnerabilities in seconds. Ship cleaner, safer code with confidence."
             </p>
           </motion.div>
@@ -108,17 +110,17 @@ const HomePage = () => {
           {/* Buttons */}
           <motion.div
             variants={itemVariants}
-            className="absolute bottom-40 flex gap-4 font-[font3]"
+            className="absolute bottom-15 md:bottom-40 flex gap-3 md:gap-4 font-[font3]"
           >
             <button
               onClick={() => navigate('/login')}
-              className="px-8 py-3 rounded-full bg-emerald-500 text-black font-semibold"
+              className="px-6 py-2 md:px-8 md:py-3 rounded-full bg-emerald-500 text-black font-semibold"
             >
               Log In
             </button>
             <button
               onClick={() => navigate('/code-review')}
-              className="px-8 py-3 rounded-full bg-emerald-100 text-black font-semibold"
+              className="px-6 py-2 md:px-8 md:py-3 rounded-full bg-emerald-100 text-black font-semibold"
             >
               Continue
             </button>
@@ -127,7 +129,7 @@ const HomePage = () => {
           {/* Footer note */}
           <motion.h2
             variants={itemVariants}
-            className="absolute bottom-25 font-[font3] text-white text-[15px]"
+            className="absolute bottom-6 md:bottom-25 font-[font3] text-white text-[12px] md:text-[15px]"
           >
             Please log in to continue to the page.
           </motion.h2>
