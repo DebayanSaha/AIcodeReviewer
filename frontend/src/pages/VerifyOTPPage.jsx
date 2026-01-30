@@ -64,8 +64,8 @@ const VerifyOTPPage = () => {
       exit="exit"
       className="min-h-screen bg-neutral-950"
     >
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-tl from-stone-900 to-green-950">
-      <div className="w-105 bg-white p-6 rounded-2xl text-center">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-linear-to-tl from-stone-900 to-green-950">
+      <div className="w-full max-w-[420px] md:w-[420px] bg-white p-6 rounded-2xl text-center">
 
         {/* Heading */}
         <h2 className="text-xl font-[font2] font-semibold text-gray-800 mb-2">
@@ -79,7 +79,7 @@ const VerifyOTPPage = () => {
 
         {/* OTP Boxes */}
         <form onSubmit={handleSubmit}>
-          <div className="flex justify-center gap-3 mb-6">
+          <div className="flex justify-center gap-2 sm:gap-3 mb-6">
             {otp.map((digit, index) => (
               <input
                 key={index}
@@ -90,7 +90,7 @@ const VerifyOTPPage = () => {
                 value={digit}
                 onChange={(e) => handleChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
-                className="w-12 h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                className="w-10 h-10 sm:w-12 sm:h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
                 required
               />
             ))}
