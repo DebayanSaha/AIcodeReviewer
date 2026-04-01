@@ -6,7 +6,7 @@ _𝗟𝗶𝘃𝗲 𝗣𝗿𝗼𝗷𝗲𝗰𝘁: https://lnkd.in/dSp4Ux4V_
 
 This system uses Node.js, Express, MongoDB, React, Gemini API, JWT, and Prism.js to transform raw code into meaningful, syntax-highlighted AI insights.
 
-𝗪𝗵𝗮𝘁 𝗺𝗮𝗸𝗲𝘀 𝗶𝘁 𝗽𝗼𝘄𝗲𝗿𝗳𝘂𝗹:
+**𝗪𝗵𝗮𝘁 𝗺𝗮𝗸𝗲𝘀 𝗶𝘁 𝗽𝗼𝘄𝗲𝗿𝗳𝘂𝗹:**
 End-to-end AI code analysis workflow with secure, authenticated access.
 REST APIs to process code and render Markdown-based AI feedback with Prism.js highlighting.
 Production-grade authentication system with:
